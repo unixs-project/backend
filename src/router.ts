@@ -14,3 +14,7 @@ const routes = Router();
 
 routes.post("/signup", userValidator, signup.handle);
 routes.post("/login", login.handle);
+
+routes.use(auth);
+
+export default routes;

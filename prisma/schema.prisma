@@ -15,6 +15,7 @@ model User {
   email     String @unique @db.VarChar(100)
   name      String @db.VarChar(100)
   password  String @db.VarChar(100)
+  permission String @db.VarChar(100)
 
   @@map("users")
 }

@@ -40,6 +40,7 @@ export class Signup {
           name,
           email,
           password: hashedPassword,
+          permission: "review",
         },
       });
 

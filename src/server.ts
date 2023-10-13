@@ -8,6 +8,6 @@ app.use(express.json());
 app.use(cors());
 app.use(routes);
 
-app.listen(3333, () => {
-  console.log(`Server is running on port 3333`);
+app.listen(4000, () => {
+  console.log(`Server is running on port 4000`);
 });
