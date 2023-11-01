@@ -1,0 +1,17 @@
+-- AlterTable
+ALTER TABLE `imagens` MODIFY `id` INTEGER NOT NULL AUTO_INCREMENT;
+
+-- AlterTable
+ALTER TABLE `textos` MODIFY `id` INTEGER NOT NULL AUTO_INCREMENT;
+
+-- CreateTable
+CREATE TABLE `fluxos` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `titulo` VARCHAR(250) NULL,
+    `paiId` INTEGER NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- AddForeignKey
+ALTER TABLE `fluxos` ADD CONSTRAINT `fluxos_paiId_fkey` FOREIGN KEY (`paiId`) REFERENCES `fluxos`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;

@@ -8,6 +8,7 @@ generator client {
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 model User {
@@ -18,5 +19,44 @@ model User {
   permission String @db.VarChar(100)
 
   @@map("users")
+}
+
+model Fluxo {
+  id        Int     @id @default(autoincrement())
+  titulo    String? @db.VarChar(250)
+  paiId 		Int?
+  pai   		Fluxo?   @relation("PaiFilhos", fields: [paiId], references: [id])
+  filhos  	Fluxo[]  @relation("PaiFilhos")
+  html 			String? @db.Text
+  
+  @@map("fluxos") 
+}
+
+
+model FluxoFilho {
+  id_fluxo_pai    Int
+  id_fluxo_filho  Int
+  
+  @@id([id_fluxo_pai, id_fluxo_filho]) // Chave primária composta
+  
+  @@map("fluxosfilhos") 
+}
+
+
+
+model Imagem {
+  id   Int @id @default(autoincrement())
+  localizacao String @db.VarChar(512)
+  
+  @@map("imagens")
+}
+
+model FluxoImagem {
+  id_fluxo    Int
+  id_imagem   Int
+  
+  @@id([id_fluxo, id_imagem]) // Chave primária composta
+  
+  @@map("fluxosimagens")
 }
 
