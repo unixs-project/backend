@@ -28,6 +28,7 @@ export class Login {
       res
         .status(400)
         .json({ errors: [{ message: "Senha incorreta. Tente novamente." }] });
+        return;
     }
 
     const token = sign({ id: user.id }, process.env.JWT_KEY as string, {

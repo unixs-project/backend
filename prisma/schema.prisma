@@ -21,42 +21,39 @@ model User {
   @@map("users")
 }
 
-model Fluxo {
+model Flow {
   id        Int     @id @default(autoincrement())
-  titulo    String? @db.VarChar(250)
-  paiId 		Int?
-  pai   		Fluxo?   @relation("PaiFilhos", fields: [paiId], references: [id])
-  filhos  	Fluxo[]  @relation("PaiFilhos")
+  title    String? @db.VarChar(250)
+  fatherId 		Int?
+  father   		Flow?   @relation("FatherChildren", fields: [fatherId], references: [id])
+  children  	Flow[]  @relation("FatherChildren")
   html 			String? @db.Text
   
-  @@map("fluxos") 
+  @@map("flows") 
 }
 
-
-model FluxoFilho {
-  id_fluxo_pai    Int
-  id_fluxo_filho  Int
+model ChildFlow {
+  fatherFlowId    Int
+  childFlowId  Int
   
-  @@id([id_fluxo_pai, id_fluxo_filho]) // Chave primária composta
+  @@id([fatherFlowId, childFlowId]) // Chave primária composta
   
-  @@map("fluxosfilhos") 
+  @@map("childrenflows") 
 }
 
-
-
-model Imagem {
+model Image {
   id   Int @id @default(autoincrement())
-  localizacao String @db.VarChar(512)
+  name String @db.VarChar(512)
   
-  @@map("imagens")
+  @@map("images")
 }
 
-model FluxoImagem {
-  id_fluxo    Int
-  id_imagem   Int
+model ImageFlow {
+  flowId    Int
+  imageId   Int
   
-  @@id([id_fluxo, id_imagem]) // Chave primária composta
+  @@id([flowId, imageId]) // Chave primária composta
   
-  @@map("fluxosimagens")
+  @@map("imagesflows")
 }
 

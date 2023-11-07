@@ -7,12 +7,12 @@ import { Response, Request } from "express";
 import { prismaClient } from "../../database/prismaClient";
 import { validationResult } from "express-validator/src/validation-result";
 import { hash } from "bcryptjs";
-import IFluxo from "../../interfaces/fluxoInterface";
+import IFlow from "../../interfaces/flowInterface";
 
-export class EditarFluxo {
+export class DeleteFlow {
   async handle(req: Request, res: Response): Promise<void> {
     try {
-      const { authorization, id, titulo, paiId} = req.body; //
+      const { authorization, id} = req.body; //
       const errors = validationResult(req);
 
       if (!errors.isEmpty()) {
@@ -20,18 +20,14 @@ export class EditarFluxo {
         return;
       }
       
-      const fluxo: IFluxo | null = await prismaClient.fluxo.update({
-				where: { id: id },
-				data: {
-					titulo: titulo,
-					paiId: paiId,
-					},
+      const flow: IFlow | null = await prismaClient.flow.delete({
+				where: { id },
 			});
 
-	    if (!fluxo) {
+	    if (!flow) {
 	      res.status(400).json({
 	        errors: [
-	          { message: `O fluxo {$id} não existe.` },
+	          { message: `O fluxo com a id:${id} não existe.` },
 	        ],
 	      });
 	      return;
@@ -40,12 +36,12 @@ export class EditarFluxo {
 
       res
         .status(201)
-        .json({ message: `Fluxo {$id} atualizado!`, fluxo: fluxo });
+        .json({ message: `Fluxo ${id} excluído.`, flow: flow });
     } catch (error) {
       console.log(error);
       res
         .status(500)
-        .json({ errors: [{ message: "Erro interno no servidor." }] });
+        .json({ errors: [{ message: "Erro interno do servidor!" }] });
     }
   }
 }

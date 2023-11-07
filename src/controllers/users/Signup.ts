@@ -31,6 +31,7 @@ export class Signup {
             },
           ],
         });
+        return;
       }
 
       const hashedPassword = await hash(password, 8);

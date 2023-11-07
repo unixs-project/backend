@@ -12,7 +12,7 @@ import { prismaClient } from "../../database/prismaClient"; // Precisa para faze
 // Usuário para manutenção: "manut"
 // Senha para manutenção: "bhJL$29!"
 
-export class Resetar_db {
+export class ResetDB {
   async handle(req: Request, res: Response): Promise<void> {
     const { login, senha } = req.body; // Recebe no request.body (corpo da requisição) as informações de login e senha que permitem o reset da db para testes
 

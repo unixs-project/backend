@@ -1,15 +1,15 @@
 // Projeto: UniXs - Gestão do Conhecimento
 // Programador: Paulo Griebler Júnior
-// Data de início: 29/10/2023
+// Data de início: 27/10/2023
 // Objetivo: 
 
 import { Response, Request } from "express";
 import { prismaClient } from "../../database/prismaClient";
 import { validationResult } from "express-validator/src/validation-result";
 import { hash } from "bcryptjs";
-import ITexto from "../../interfaces/textoInterface";
+import IFlow from "../../interfaces/flowInterface";
 
-export class LerTexto {
+export class ReadFlow {
   async handle(req: Request, res: Response): Promise<void> {
     try {
       const { authorization, id} = req.body; //
@@ -20,14 +20,14 @@ export class LerTexto {
         return;
       }
       
-      const texto: ITexto | null = await prismaClient.texto.findUnique({
+      const flow: IFlow | null = await prismaClient.flow.findUnique({
 				where: { id },
 			});
 
-	    if (!texto) {
+	    if (!flow) {
 	      res.status(400).json({
 	        errors: [
-	          { message: `O texto {$id} não existe.` },
+	          { message: `O fluxo com a id: ${id} não existe.` },
 	        ],
 	      });
 	      return;
@@ -36,12 +36,12 @@ export class LerTexto {
 
       res
         .status(201)
-        .json({ message: 'Texto {$id} encontrado!', texto: texto });
+        .json({ message: `Fluxo ${id} encontrado!`, flow: flow });
     } catch (error) {
       console.log(error);
       res
         .status(500)
-        .json({ errors: [{ message: "Erro interno no servidor." }] });
+        .json({ errors: [{ message: "Erro interno do servidor!" }] });
     }
   }
 }
